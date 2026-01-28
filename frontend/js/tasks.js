@@ -3,7 +3,7 @@ function getToken() {
   return localStorage.getItem('token');
 }
 
-const TASK_API = 'http://localhost:5000/api/tasks';
+const TASK_API = 'https://taskmanager-8rtb.onrender.com/api/tasks';
 let allTasks = [];
 
 // Wait for DOM

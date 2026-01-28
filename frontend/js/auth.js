@@ -1,5 +1,5 @@
 // frontend/js/auth.js
-const AUTH_API = 'http://localhost:5000/api';  
+const AUTH_API = 'https://taskmanager-8rtb.onrender.com/api';  
 
 // DOM elements
 const loginForm    = document.getElementById('loginForm');
