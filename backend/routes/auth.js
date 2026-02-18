@@ -2,10 +2,15 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // REGISTER
 router.post('/register', async (req, res) => {
   try {
+    if (!JWT_SECRET) {
+      return res.status(500).json({ message: 'Server auth configuration error' });
+    }
+
     const { username, email, password } = req.body;
 
     if (!username || !email || !password)
@@ -18,13 +23,9 @@ router.post('/register', async (req, res) => {
     const user = new User({ username, email, password });
     await user.save();
 
-    if (!process.env.JWT_SECRET) {
-      throw new Error("JWT_SECRET not defined in .env");
-    }
-
     const token = jwt.sign(
       { id: user._id },
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       { expiresIn: '7d' }
     );
 
@@ -39,7 +40,14 @@ router.post('/register', async (req, res) => {
 // LOGIN
 router.post('/login', async (req, res) => {
   try {
+    if (!JWT_SECRET) {
+      return res.status(500).json({ message: 'Server auth configuration error' });
+    }
+
     const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required' });
+    }
 
     const user = await User.findOne({ email });
     if (!user)
@@ -54,7 +62,7 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign(
       { id: user._id },
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       { expiresIn: '7d' }
     );
 

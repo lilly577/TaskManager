@@ -4,31 +4,113 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>TaskManager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-<div class="app-container" id="app">
+<div class="app-shell" id="app">
 
-  <!-- Header / Navbar -->
-  <header>
-    <h1>TaskHub</h1>
+  <header class="topbar">
+    <div class="brand-wrap">
+      <h1>TaskHub</h1>
+      <p>Plan sharp. Execute clean.</p>
+    </div>
     <div class="user-controls">
-      <button id="toggleDark">Dark Mode</button>
-      <button id="logoutBtn" style="display:none;">Logout</button>
+      <label class="control-chip" for="themePreset">
+        Theme
+        <select id="themePreset">
+          <option value="ocean">Ocean</option>
+          <option value="sunset">Sunset</option>
+          <option value="mono">Mono</option>
+        </select>
+      </label>
+      <label class="control-chip" for="densitySelect">
+        Density
+        <select id="densitySelect">
+          <option value="cozy">Cozy</option>
+          <option value="compact">Compact</option>
+        </select>
+      </label>
+      <button id="toggleDark" class="secondary-btn" type="button">Dark Mode</button>
+      <button id="logoutBtn" class="danger-btn" style="display:none;" type="button">Logout</button>
     </div>
   </header>
 
-  <!-- Auth Section -->
+  <section id="landingSection" class="landing-hero">
+    <article class="landing-copy">
+      <p class="landing-eyebrow">TaskHub Productivity Suite</p>
+      <h2>Organize your work, track priorities and finish on time.</h2>
+      <p>
+        TaskHub helps you plan daily work, monitor deadlines, and keep your progress
+        visible from one clean workspace. Save your tasks and continue where you left off.
+      </p>
+      <div class="landing-actions">
+        <button id="getStartedBtn" class="primary-btn" type="button">Get Started</button>
+      </div>
+    </article>
+
+    <aside class="landing-visual" aria-hidden="true">
+      <div class="visual-board">
+        <div class="visual-col">
+          <h4>What You Can Do</h4>
+          <ul class="tick-list">
+            <li>Create tasks with due dates and priorities</li>
+            <li>Filter, sort, and search in seconds</li>
+            <li>Track status from pending to completed</li>
+          </ul>
+        </div>
+        <div class="visual-col">
+          <h4>Why It Helps</h4>
+          <ul class="tick-list">
+            <li>Keep work and personal goals organized</li>
+            <li>Focus on urgent tasks first</li>
+            <li>See progress clearly every day</li>
+          </ul>
+        </div>
+        <div class="visual-col">
+          <h4>Safe And Reliable</h4>
+          <ul class="tick-list">
+            <li>Your tasks stay saved to your account</li>
+            <li>Access again after next login</li>
+            <li>Delete only when you choose</li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+  </section>
+
+  <footer id="landingFooter" class="landing-footer">
+    <div class="landing-footer-cta">
+      <h3>Ready to organize your day?</h3>
+      <p>Start now and keep your tasks in one reliable place.</p>
+      <div class="landing-footer-actions">
+        <button id="footerGetStartedBtn" class="primary-btn" type="button">Yes!!</button>
+        <button id="footerLoginBtn" class="secondary-btn" type="button">Already have an account? Login</button>
+      </div>
+    </div>
+
+    <div class="landing-footer-meta">
+      <nav class="legal-links" aria-label="Legal">
+        <a href="#" aria-label="Privacy Policy">Privacy Policy</a>
+        <a href="#" aria-label="Terms of Service">Terms of Service</a>
+        <a href="#" aria-label="Cookie Policy">Cookie Policy</a>
+      </nav>
+      <p class="copyright">© 2026 TaskHub. All rights reserved.</p>
+    </div>
+  </footer>
+
   <div id="authSection" class="auth-box">
     <div class="tabs">
-      <button class="tab active" data-tab="login">Login</button>
-      <button class="tab" data-tab="register">Register</button>
+      <button class="tab active" data-tab="login" type="button">Login</button>
+      <button class="tab" data-tab="register" type="button">Register</button>
     </div>
 
     <form id="loginForm" class="auth-form active">
       <h2>Login</h2>
-      <input type="email"    id="loginEmail"    placeholder="Email" required>
+      <input type="email" id="loginEmail" placeholder="Email" required>
       <input type="password" id="loginPassword" placeholder="Password" required>
       <button type="submit">Login</button>
       <p class="error" id="loginError"></p>
@@ -36,28 +118,56 @@
 
     <form id="registerForm" class="auth-form">
       <h2>Register</h2>
-      <input type="text"     id="regUsername"   placeholder="Username" required>
-      <input type="email"    id="regEmail"      placeholder="Email" required>
-      <input type="password" id="regPassword"   placeholder="Password" required>
+      <input type="text" id="regUsername" placeholder="Username" required>
+      <input type="email" id="regEmail" placeholder="Email" required>
+      <input type="password" id="regPassword" placeholder="Password" required>
+      <input type="password" id="regConfirmPassword" placeholder="Confirm Password" required>
       <button type="submit">Create Account</button>
       <p class="error" id="regError"></p>
     </form>
   </div>
+  <button id="backToHomeBtn" class="home-link-btn" type="button">Go Back Home</button>
 
-  <!-- Main Dashboard -->
   <main id="dashboard" style="display:none;">
-    
-    <section class="controls">
-      <button id="addTaskBtn">+ New Task</button>
-      
-      <input type="text" id="searchInput" placeholder="Search tasks...">
-      
+    <section class="insights-grid" aria-label="Insights">
+      <article class="insight-card"><span>Total</span><strong id="totalCount">0</strong></article>
+      <article class="insight-card"><span>Pending</span><strong id="pendingCount">0</strong></article>
+      <article class="insight-card"><span>Completed</span><strong id="completedCount">0</strong></article>
+      <article class="insight-card"><span>Streak</span><strong id="streakCount">0d</strong></article>
+      <article class="insight-card"><span>Workload (7d)</span><strong id="workloadCount">0h</strong></article>
+    </section>
+
+    <section class="focus-panel" aria-label="Today Focus">
+      <div>
+        <h2>Today Focus</h2>
+        <p>Top priority tasks based on urgency and impact.</p>
+      </div>
+      <ul id="focusList"></ul>
+    </section>
+
+    <section class="quick-add" aria-label="Quick Add">
+      <h2>Quick Add</h2>
+      <form id="quickAddForm">
+        <input type="text" id="quickTitle" placeholder="Task title" required>
+        <input type="date" id="quickDueDate">
+        <select id="quickPriority">
+          <option value="High">High</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="Low">Low</option>
+        </select>
+        <button type="submit" class="primary-btn">Add</button>
+      </form>
+    </section>
+
+    <section class="controls" aria-label="Task controls">
+      <button id="addTaskBtn" class="primary-btn" type="button">New Task</button>
+      <input type="text" id="searchInput" placeholder="Search by title, description, category...">
       <select id="filterStatus">
-        <option value="all">All</option>
+        <option value="all">All Status</option>
         <option value="pending">Pending</option>
         <option value="completed">Completed</option>
+        <option value="overdue">Overdue</option>
       </select>
-
       <select id="filterCategory">
         <option value="all">All Categories</option>
         <option value="Work">Work</option>
@@ -65,40 +175,59 @@
         <option value="Study">Study</option>
         <option value="Other">Other</option>
       </select>
-
       <select id="sortSelect">
         <option value="created-desc">Newest first</option>
-        <option value="due-asc">Due date ↑</option>
-        <option value="due-desc">Due date ↓</option>
-        <option value="priority-desc">Priority ↓</option>
+        <option value="due-asc">Due date up</option>
+        <option value="due-desc">Due date down</option>
+        <option value="priority-desc">Priority high to low</option>
+        <option value="manual">Manual order</option>
       </select>
+      <button id="savePresetBtn" class="secondary-btn" type="button">Save Filter</button>
+      <select id="savedPresetSelect">
+        <option value="">Saved Filters</option>
+      </select>
+      <button id="clearFiltersBtn" class="secondary-btn" type="button">Reset</button>
     </section>
 
-    <section class="stats">
-      <div>Total: <span id="totalCount">0</span></div>
-      <div>Pending: <span id="pendingCount">0</span></div>
-      <div>Completed: <span id="completedCount">0</span></div>
+    <section class="view-switch" aria-label="View switcher">
+      <button class="view-btn active" data-view="list" type="button">List</button>
+      <button class="view-btn" data-view="board" type="button">Board</button>
+      <button class="view-btn" data-view="timeline" type="button">Timeline</button>
     </section>
 
-    <ul id="taskList"></ul>
+    <section id="loadingSkeleton" class="skeleton-wrap" style="display:none;"></section>
+
+    <section id="emptyState" class="empty-state" style="display:none;">
+      <h3>No tasks match this view</h3>
+      <p>Try clearing filters or create a new task.</p>
+      <button id="emptyActionBtn" class="primary-btn" type="button">Create Task</button>
+    </section>
+
+    <section id="listView" class="view-panel active" aria-label="Task List">
+      <ul id="taskList"></ul>
+    </section>
+
+    <section id="boardView" class="view-panel" aria-label="Task Board"></section>
+
+    <section id="timelineView" class="view-panel" aria-label="Task Timeline"></section>
   </main>
 
 </div>
 
-<!-- Task Modal -->
-<div id="taskModal" class="modal">
+<div id="taskModal" class="modal" aria-hidden="true">
   <div class="modal-content">
-    <span class="close">&times;</span>
+    <button class="close" type="button" aria-label="Close">x</button>
     <h2 id="modalTitle">New Task</h2>
     <form id="taskForm">
       <input type="hidden" id="taskId">
-      <label>Title *</label>
+
+      <label for="taskTitle">Title *</label>
       <input type="text" id="taskTitle" required>
 
-      <label>Description</label>
+      <label for="taskDesc">Description</label>
       <textarea id="taskDesc"></textarea>
 
-      <label>Category</label>
+      <label for="taskCategory">Category</label>
       <select id="taskCategory">
         <option value="Work">Work</option>
         <option value="Personal">Personal</option>
@@ -106,20 +235,33 @@
         <option value="Other" selected>Other</option>
       </select>
 
-      <label>Priority</label>
+      <label for="taskPriority">Priority</label>
       <select id="taskPriority">
         <option value="Low">Low</option>
         <option value="Medium" selected>Medium</option>
         <option value="High">High</option>
       </select>
 
-      <label>Due Date</label>
-      <input type="date" id="taskDueDate">
+      <div class="date-grid">
+        <div>
+          <label for="taskStartDate">Start Date</label>
+          <input type="date" id="taskStartDate">
+        </div>
+        <div>
+          <label for="taskDueDate">Due Date</label>
+          <input type="date" id="taskDueDate">
+        </div>
+      </div>
 
-      <button type="submit">Save Task</button>
+      <label for="taskEstimatedTime">Estimated Time (hours)</label>
+      <input type="number" id="taskEstimatedTime" min="0" step="0.5" value="0">
+
+      <button type="submit" class="primary-btn">Save Task</button>
     </form>
   </div>
 </div>
+
+<div id="toast" class="toast" aria-live="polite"></div>
 
 <script src="js/auth.js"></script>
 <script src="js/tasks.js"></script>

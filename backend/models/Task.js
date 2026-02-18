@@ -6,7 +6,14 @@ const taskSchema = new mongoose.Schema({
     description:{ type: String, trim: true },
     category:   { type: String, enum: ['Work', 'Personal', 'Study', 'Other'], default: 'Other' },
     priority:   { type: String, enum: ['Low', 'Medium', 'High'], default: 'Medium' },
+    startDate:  { type: Date},
     dueDate:    { type: Date },
+    estimatedTime:{ 
+        type: Number,
+        min: 0,
+        default: 0
+     }, 
+     
     completed:  { type: Boolean, default: false }
 }, { timestamps: true });
 
